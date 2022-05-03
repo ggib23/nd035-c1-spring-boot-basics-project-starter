@@ -29,7 +29,7 @@ public class LoginController {
     }
 
     @PostMapping()
-    public String signupUser(@ModelAttribute User user, Model model) {
+    public String loginUser(@ModelAttribute User user, Model model) {
 
         HashMap<String, Boolean> param = new HashMap<>();
 
@@ -43,11 +43,8 @@ public class LoginController {
 
         if (token == null) {
             param.put("error", true);
-        } else {
-            
-            // Cookie logic, save token as cookie and redirect to homepage
         }
 
-        return "home";
+        return null;
     }
 }
