@@ -2,10 +2,15 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.AuthenticationService;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +29,18 @@ public class LoginController {
     }
 
     @GetMapping()
-    public String loginView() {
+    public String loginView(HttpServletRequest request) throws ServletException {
+        HashMap<String, Boolean> param = new HashMap<>();
+        param.put("logout", false);
+        //Authentication to check if there is any authenticated user, if yes return null
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
+        
+        //If auth is not null, compare the Auth Token to the token of a authenticated user
+        if (auth != null && (!(auth instanceof AnonymousAuthenticationToken))) {
+            param.put("logout", true);
+            request.logout(); //Clears the session storage of the authorized SessionId token
+        }
+
         return "login";
     }
 
@@ -34,7 +50,6 @@ public class LoginController {
         HashMap<String, Boolean> param = new HashMap<>();
 
         param.put("error", false);
-        param.put("logout", false);
         
         String username = user.getUsername();
         String password = user.getPassword();
