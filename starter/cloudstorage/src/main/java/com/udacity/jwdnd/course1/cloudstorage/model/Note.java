@@ -41,7 +41,7 @@ public class Note {
         return userId;
     }
 
-    public void setUuserId(Integer userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
