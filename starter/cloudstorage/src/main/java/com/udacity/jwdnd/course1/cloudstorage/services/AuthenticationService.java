@@ -41,17 +41,4 @@ public class AuthenticationService implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
-
-    public Authentication login(String username, String password) {
-        User user = userMapper.getUser(username);
-        if (user != null) {
-            String encodedSalt = user.getSalt();
-            String hashedPassword = hashService.getHashedValue(password, encodedSalt);
-            if (user.getPassword().equals(hashedPassword)) {
-                return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
-            }
-        }
-
-        return null;
-    }
 }
