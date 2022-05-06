@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    private final UserMapper userMapper;
-    private final HashService hashService;
+    private UserMapper userMapper;
+    private HashService hashService;
 
     public UserService(UserMapper userMapper, HashService hashService) {
         this.userMapper = userMapper;

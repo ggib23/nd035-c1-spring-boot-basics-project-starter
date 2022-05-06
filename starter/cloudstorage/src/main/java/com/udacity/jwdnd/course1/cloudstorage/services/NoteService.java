@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NoteService {
-    private final NoteMapper noteMapper;
+    private NoteMapper noteMapper;
 
     public NoteService(NoteMapper noteMapper) {
         this.noteMapper = noteMapper;

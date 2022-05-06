@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/signup")
 public class SignupController {
 
-    private final UserService userService;
+    private UserService userService;
 
     public SignupController(UserService userService) {
         this.userService = userService;

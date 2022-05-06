@@ -6,8 +6,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
+import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -26,10 +28,12 @@ public class HomeController {
 
     private UserMapper userMapper;
     private NoteService noteService;
+    private CredentialService credentialsService;
 
-    public HomeController(UserMapper userMapper, NoteService noteService) {
+    public HomeController(UserMapper userMapper, NoteService noteService, CredentialService credentialsService) {
         this.userMapper = userMapper;
         this.noteService = noteService;
+        this.credentialsService = credentialsService;
     }
 
     @GetMapping()
@@ -38,10 +42,14 @@ public class HomeController {
         User user = userMapper.getUser(username);
         Integer userId = user.getUserId();
         Note note = new Note(0, "", "", userId);
+        Credential credential = new Credential(0, "", "", "", "", userId);
 
         List<Note> notes = noteService.getNotes(userId);
+        List<Credential> credentials = credentialsService.getCredentials(userId);
         model.addAttribute("notesList", notes);
         model.addAttribute("noteDetails", note);
+        model.addAttribute("credentialsList", credentials);
+        model.addAttribute("credentialDetails", credential);
 
         return "home";
     }
