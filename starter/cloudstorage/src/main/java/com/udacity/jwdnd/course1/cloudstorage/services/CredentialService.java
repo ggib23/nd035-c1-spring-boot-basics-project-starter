@@ -32,7 +32,7 @@ public class CredentialService {
 
     public int createCredential(Credential credential) {
         encryptPassword(credential);
-        return credentialMapper.addCredential(new Credential(null, credential.getUrl(), credential.getUsername(), credential.getKey(), credential.getPassword(), credential.getUserId()));
+        return credentialMapper.addCredential(new Credential(null, credential.getUrl(), credential.getUsername(), credential.getPassword(), credential.getKey(), credential.getUserId()));
     }
 
     public List<Credential> getCredentials(Integer userId) {

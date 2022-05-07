@@ -31,8 +31,9 @@ public class CredentialController {
         String username = authentication.getName();
         User user = userMapper.getUser(username);
 
-        if (credential.getCredentialId() != 0) {
+        if (credential.getCredentialId() != null) {
             try {
+                credential.setUserId(user.getUserId());
                 // Update an existing credential
                 credentialService.updateCredential(credential);
                 // After redirect, flash attributes are automatically added to the model of the controller that serves the target URL
