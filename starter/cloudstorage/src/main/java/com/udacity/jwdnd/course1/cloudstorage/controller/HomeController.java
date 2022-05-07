@@ -11,6 +11,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
+import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -29,12 +30,14 @@ public class HomeController {
 
     private UserMapper userMapper;
     private NoteService noteService;
+    private FileService fileService;
     private CredentialService credentialsService;
     private EncryptionService encryptionService;
 
-    public HomeController(UserMapper userMapper, NoteService noteService, CredentialService credentialsService, EncryptionService encryptionService) {
+    public HomeController(UserMapper userMapper, NoteService noteService, FileService fileService, CredentialService credentialsService, EncryptionService encryptionService) {
         this.userMapper = userMapper;
         this.noteService = noteService;
+        this.fileService = fileService;
         this.credentialsService = credentialsService;
         this.encryptionService = encryptionService;
     }
@@ -51,6 +54,7 @@ public class HomeController {
         List<Credential> credentials = credentialsService.getCredentials(userId);
         model.addAttribute("notesList", notes);
         model.addAttribute("noteDetails", note);
+        model.addAttribute("filesList", fileService.getFiles(userId));
         model.addAttribute("credentialsList", credentials);
         model.addAttribute("credentialDetails", credential);
         model.addAttribute("encryptionService", encryptionService);
