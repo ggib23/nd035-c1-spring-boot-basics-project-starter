@@ -53,12 +53,13 @@ public class FileController {
             return "redirect:/result";
         } else {
             try {
-                // Creating a new credential
+                // Creating a new file
                 fileService.createFile(file, multipartFile);
                 // After redirect, flash attributes are automatically added to the model of the controller that serves the target URL
                 redirectAttributes.addFlashAttribute("successMessage", "Success! You have saved your file successfully.");
                 return "redirect:/result";
             } catch (Exception error) {
+                logger.error(error.getMessage());
                 redirectAttributes.addFlashAttribute("errorMessage", "Error: Please try again.");
                 return "redirect:/result";
             }
